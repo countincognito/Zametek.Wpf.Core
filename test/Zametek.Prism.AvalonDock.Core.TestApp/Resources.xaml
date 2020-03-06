@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:local="clr-namespace:Zametek.Wpf.Core.TestApp"
+                    xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="DocumentTitleTemplate">
+        <DockPanel>
+            <TextBlock Text="Document: "
+                       TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Path=Content.DataContext.Title}"
+                       DockPanel.Dock="Left"
+                       TextTrimming="CharacterEllipsis" />
+        </DockPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AnchorableTitleTemplate">
+        <DockPanel>
+            <TextBlock Text="Anchorable: "
+                       TextTrimming="CharacterEllipsis" />
+            <TextBlock Text="{Binding Path=Content.DataContext.Title}"
+                       DockPanel.Dock="Left"
+                       TextTrimming="CharacterEllipsis" />
+        </DockPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DocumentHeaderTemplate">
+        <DockPanel>
+            <TextBlock Text="{Binding Path=Content.DataContext.Title}"
+                       MaxWidth="125"
+                       TextTrimming="CharacterEllipsis" />
+        </DockPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AnchorableHeaderTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Path=Content.DataContext.Title}"
+                       MaxWidth="125"
+                       TextTrimming="CharacterEllipsis" />
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

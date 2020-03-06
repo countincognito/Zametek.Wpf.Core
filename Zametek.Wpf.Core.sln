@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B4FB7D34-3D72-4FFF-BDAF-82B217811232}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{64D29C04-CEC8-4E60-BCF4-F77D0B1EE935}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prism", "Prism", "{E95B31D0-0362-47BA-A955-F028A980427C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FB1B8186-376E-449C-BD59-363CBDCCEA5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zametek.Prism.AvalonDock.Core", "src\Zametek.Prism.AvalonDock.Core\Zametek.Prism.AvalonDock.Core.csproj", "{1D5157E2-512A-4CF5-A3B3-35F7AF6F91E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zametek.Windows.AvalonDock.Core", "src\Zametek.Windows.AvalonDock.Core\Zametek.Windows.AvalonDock.Core.csproj", "{29AF8DE4-D750-4B54-ABE3-C7F53B6AD843}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zametek.Prism.AvalonDock.Core.TestApp", "test\Zametek.Prism.AvalonDock.Core.TestApp\Zametek.Prism.AvalonDock.Core.TestApp.csproj", "{3B36B3C9-A136-4030-BE55-1C52013E18E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D5157E2-512A-4CF5-A3B3-35F7AF6F91E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D5157E2-512A-4CF5-A3B3-35F7AF6F91E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D5157E2-512A-4CF5-A3B3-35F7AF6F91E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D5157E2-512A-4CF5-A3B3-35F7AF6F91E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29AF8DE4-D750-4B54-ABE3-C7F53B6AD843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29AF8DE4-D750-4B54-ABE3-C7F53B6AD843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29AF8DE4-D750-4B54-ABE3-C7F53B6AD843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29AF8DE4-D750-4B54-ABE3-C7F53B6AD843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B36B3C9-A136-4030-BE55-1C52013E18E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B36B3C9-A136-4030-BE55-1C52013E18E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B36B3C9-A136-4030-BE55-1C52013E18E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B36B3C9-A136-4030-BE55-1C52013E18E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{64D29C04-CEC8-4E60-BCF4-F77D0B1EE935} = {B4FB7D34-3D72-4FFF-BDAF-82B217811232}
+		{E95B31D0-0362-47BA-A955-F028A980427C} = {B4FB7D34-3D72-4FFF-BDAF-82B217811232}
+		{1D5157E2-512A-4CF5-A3B3-35F7AF6F91E5} = {E95B31D0-0362-47BA-A955-F028A980427C}
+		{29AF8DE4-D750-4B54-ABE3-C7F53B6AD843} = {64D29C04-CEC8-4E60-BCF4-F77D0B1EE935}
+		{3B36B3C9-A136-4030-BE55-1C52013E18E9} = {FB1B8186-376E-449C-BD59-363CBDCCEA5F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA59F311-328B-47DA-94F8-E83E0AE68535}
+	EndGlobalSection
+EndGlobal
