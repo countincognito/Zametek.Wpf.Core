@@ -36,7 +36,7 @@ namespace Zametek.Wpf.Core
             }
             try
             {
-                m_State = stateResourceAccess.Load();
+                m_State = stateResourceAccess.Load() ?? new TState();
             }
             finally
             {

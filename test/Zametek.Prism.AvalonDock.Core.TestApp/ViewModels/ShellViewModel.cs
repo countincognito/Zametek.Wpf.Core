@@ -12,7 +12,6 @@ namespace Zametek.Wpf.Core.TestApp
         #region Fields
 
         private readonly IRegionManager m_RegionManager;
-        private readonly IEventAggregator m_EventService;
         private string m_DisplayName;
         private string m_NewDocumentName;
 
@@ -20,20 +19,9 @@ namespace Zametek.Wpf.Core.TestApp
 
         #region Ctors
 
-        public ShellViewModel(
-            IRegionManager regionManager,
-            IEventAggregator eventService)
+        public ShellViewModel(IRegionManager regionManager)
         {
-            if (regionManager == null)
-            {
-                throw new ArgumentNullException(nameof(regionManager));
-            }
-            if (eventService == null)
-            {
-                throw new ArgumentNullException(nameof(eventService));
-            }
-            m_RegionManager = regionManager;
-            m_EventService = eventService;
+            m_RegionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
             InitializeCommands();
             SubscribeToEvents();
         }
@@ -99,8 +87,10 @@ namespace Zametek.Wpf.Core.TestApp
             string docName = NewDocumentName;
             if (!string.IsNullOrEmpty(docName))
             {
-                var navigationParameters = new NavigationParameters();
-                navigationParameters.Add(Properties.Resources.Name, docName);
+                var navigationParameters = new NavigationParameters
+                {
+                    { Properties.Resources.Name, docName }
+                };
                 m_RegionManager.RequestNavigate(
                     Constants.MainRegion,
                     new Uri($@"{Properties.Resources.DocumentView}{navigationParameters}",
@@ -121,10 +111,6 @@ namespace Zametek.Wpf.Core.TestApp
         #region Private Methods
 
         private void SubscribeToEvents()
-        {
-        }
-
-        private void UnsubscribeFromEvents()
         {
         }
 

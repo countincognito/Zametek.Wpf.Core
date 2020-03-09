@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,7 +10,7 @@
     <Copyright>Copyright (c) 2020 Riccardo M Bennett-Lovsey</Copyright>
     <PackageLicenseFile>README.md</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/countincognito/Zametek.Wpf.Core</PackageProjectUrl>
-    <Description>Zametek Windows extensions for persisting XAML property values s(.NET Core).</Description>
+    <Description>Zametek Windows extensions for persisting XAML property values (.NET Core).</Description>
     <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 

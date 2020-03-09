@@ -5,7 +5,7 @@ using System.Windows.Markup;
 
 namespace Zametek.Wpf.Core
 {
-    public abstract class AbstractPropertyStateExtensions<TState, TElement, TProperty>
+    public abstract class AbstractPropertyStateExtension<TState, TElement, TProperty>
        : MarkupExtension
         where TState : IPersistenceState<TElement>, new()
         where TElement : IPersistenceElement<TProperty>, new()

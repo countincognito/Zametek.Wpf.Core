@@ -284,8 +284,8 @@ namespace Zametek.Wpf.Core
                     Target = element,
                     Property = property,
                 },
-                Source = s_PropertyStates,                             // Not strictly necessary.
-                Path = new PropertyPath($@"[{{{uidWithNamespace}}}]"), // Not strictly necessary.
+                Source = s_PropertyStates,
+                Path = new PropertyPath($@"[{uidWithNamespace}]"),
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
             };
             return output;
