@@ -2,7 +2,7 @@
 
 namespace Zametek.Wpf.Core
 {
-    public interface IAmElement<TProperty>
+    public interface IPersistenceElement<TProperty>
     {
         List<TProperty> Properties { get; }
 

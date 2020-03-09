@@ -6,16 +6,8 @@ namespace Zametek.Wpf.Core
     public sealed class AvalonDockAnchorableAttribute
        : Attribute
     {
-        public AnchorableStrategies Strategy
-        {
-            get;
-            set;
-        }
+        public AnchorableStrategies Strategy { get; set; }
 
-        public bool IsHidden
-        {
-            get;
-            set;
-        }
+        public bool IsHidden { get; set; }
     }
 }

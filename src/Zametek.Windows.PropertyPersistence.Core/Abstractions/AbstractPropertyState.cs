@@ -7,9 +7,9 @@ using System.Windows;
 namespace Zametek.Wpf.Core
 {
     public abstract class AbstractPropertyState<TState, TElement, TProperty>
-        where TState : IAmState<TElement>, new()
-        where TElement : IAmElement<TProperty>, new()
-        where TProperty : IAmProperty, new()
+        where TState : IPersistenceState<TElement>, new()
+        where TElement : IPersistenceElement<TProperty>, new()
+        where TProperty : IPersistenceProperty, new()
     {
         #region Fields
 
@@ -31,45 +31,87 @@ namespace Zametek.Wpf.Core
         public static readonly DependencyProperty IsNamespacingEnabledProperty =
            DependencyProperty.RegisterAttached("IsNamespacingEnabled", typeof(bool), typeof(AbstractPropertyState<TState, TElement, TProperty>), new PropertyMetadata(false));
 
-        public static void SetUid(DependencyObject element, string value)
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        public static void SetUid(
+            DependencyObject element,
+            string value)
         {
-            element.SetValue(AbstractPropertyState<TState, TElement, TProperty>.UidProperty, value);
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+            element.SetValue(UidProperty, value);
         }
 
         public static string GetUid(DependencyObject element)
         {
-            return (string)element.GetValue(AbstractPropertyState<TState, TElement, TProperty>.UidProperty);
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+            return (string)element.GetValue(UidProperty);
         }
 
-        public static void SetMode(DependencyObject element, PropertyStateMode value)
+        public static void SetMode(
+            DependencyObject element,
+            PropertyStateMode value)
         {
-            element.SetValue(AbstractPropertyState<TState, TElement, TProperty>.ModeProperty, value);
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+            element.SetValue(ModeProperty, value);
         }
 
         public static PropertyStateMode GetMode(DependencyObject element)
         {
-            return (PropertyStateMode)element.GetValue(AbstractPropertyState<TState, TElement, TProperty>.ModeProperty);
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+            return (PropertyStateMode)element.GetValue(ModeProperty);
         }
 
-        public static void SetVisualAnchor(DependencyObject element, FrameworkElement value)
+        public static void SetVisualAnchor(
+            DependencyObject element,
+            FrameworkElement value)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(VisualAnchorProperty, value);
         }
 
         public static FrameworkElement GetVisualAnchor(DependencyObject element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (FrameworkElement)element.GetValue(VisualAnchorProperty);
         }
 
-        public static bool GetIsNamespacingEnabled(DependencyObject obj)
+        public static bool GetIsNamespacingEnabled(DependencyObject item)
         {
-            return (bool)obj.GetValue(IsNamespacingEnabledProperty);
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+            return (bool)item.GetValue(IsNamespacingEnabledProperty);
         }
 
-        public static void SetIsNamespacingEnabled(DependencyObject obj, bool value)
+        public static void SetIsNamespacingEnabled(
+            DependencyObject item,
+            bool value)
         {
-            obj.SetValue(IsNamespacingEnabledProperty, value);
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+            item.SetValue(IsNamespacingEnabledProperty, value);
         }
+#pragma warning restore CA1000 // Do not declare static members on generic types
 
         #endregion
 
@@ -133,7 +175,7 @@ namespace Zametek.Wpf.Core
         {
             if (!m_PropertyValues.TryGetValue(property, out object value))
             {
-                throw new InvalidOperationException(string.Format("There is no value for property name {0}", property.Name));
+                throw new InvalidOperationException($@"There is no value for property name ""{property.Name}""");
             }
             return value;
         }
@@ -173,13 +215,13 @@ namespace Zametek.Wpf.Core
         {
             if (!m_PropertyValues.ContainsKey(property))
             {
-                throw new InvalidOperationException(string.Format("Property name {0} is not in memory state", property.Name));
+                throw new InvalidOperationException($@"Property name ""{property.Name}"" is not in memory state");
             }
             if (Mode == PropertyStateMode.Persisted)
             {
                 if (!Persistence.Contains(Uid, property.Name))
                 {
-                    throw new InvalidOperationException(string.Format("Property name {0} is not in persisted state", property.Name));
+                    throw new InvalidOperationException($@"Property name ""{property.Name}"" is not in persisted state");
                 }
                 Persistence.Persist(
                     Uid,
@@ -194,9 +236,9 @@ namespace Zametek.Wpf.Core
 
         #region Protected Methods
 
-        protected abstract string Serialize(DependencyProperty property, object value);
+        protected abstract string Serialize(DependencyProperty prop, object value);
 
-        protected abstract object Deserialize(DependencyProperty property, string stringValue);
+        protected abstract object Deserialize(DependencyProperty prop, string stringValue);
 
         #endregion
 
@@ -204,12 +246,18 @@ namespace Zametek.Wpf.Core
 
         internal static object ConvertFromString(Type targetType, DependencyProperty property, string stringValue)
         {
-            return DependencyPropertyDescriptor.FromProperty(property, targetType).Converter.ConvertFromString(stringValue);
+            return DependencyPropertyDescriptor
+                .FromProperty(property, targetType)
+                .Converter
+                .ConvertFromString(stringValue);
         }
 
         internal static string ConvertToString(Type targetType, DependencyProperty property, object value)
         {
-            return DependencyPropertyDescriptor.FromProperty(property, targetType).Converter.ConvertToString(value);
+            return DependencyPropertyDescriptor
+                .FromProperty(property, targetType)
+                .Converter
+                .ConvertToString(value);
         }
 
         internal static string GetNamespace(DependencyObject element)
@@ -226,7 +274,7 @@ namespace Zametek.Wpf.Core
                 }
             }
             if (frameworkElement != null
-                && !AbstractPropertyState<TState, TElement, TProperty>.GetIsNamespacingEnabled(element))
+                && !GetIsNamespacingEnabled(element))
             {
                 frameworkElement = null;
             }
@@ -256,7 +304,7 @@ namespace Zametek.Wpf.Core
 
         private static string GetNamespaceName(FrameworkElement element)
         {
-            string name = AbstractPropertyState<TState, TElement, TProperty>.GetUid(element);
+            string name = GetUid(element);
             if (string.IsNullOrEmpty(name))
             {
                 name = element.GetType().Name;

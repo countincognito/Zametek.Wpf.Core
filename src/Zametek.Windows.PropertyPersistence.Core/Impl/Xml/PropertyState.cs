@@ -4,10 +4,10 @@
 //using System.Windows;
 //using System.Xml.Serialization;
 
-//namespace Zametek.WindowsEx.PropertyPersistence.Xml
+//namespace Zametek.Wpf.Core.Impl.Xml
 //{
 //    public class PropertyState
-//        : AbstractPropertyState<State, Element, Property>
+//        : AbstractPropertyState<PersistenceState, PersistenceElement, PersistenceProperty>
 //    {
 //        internal PropertyState(DependencyObject element)
 //            : base(element)
@@ -20,11 +20,9 @@
 //        {
 //            Type valueType = DependencyPropertyDescriptor.FromProperty(property, Type).PropertyType;
 //            var serializer = new XmlSerializer(valueType);
-//            using (var stringWriter = new StringWriter())
-//            {
-//                serializer.Serialize(stringWriter, value);
-//                return stringWriter.ToString();
-//            }
+//            using var stringWriter = new StringWriter();
+//            serializer.Serialize(stringWriter, value);
+//            return stringWriter.ToString();
 //        }
 
 //        protected override object Deserialize(DependencyProperty property, string stringValue)
@@ -35,10 +33,8 @@
 //            //    valueType = typeof(List<object>);
 //            //}
 //            var serializer = new XmlSerializer(valueType);
-//            using (var stringReader = new StringReader(stringValue))
-//            {
-//                return serializer.Deserialize(stringReader);
-//            }
+//            using var stringReader = new StringReader(stringValue);
+//            return serializer.Deserialize(stringReader);
 //        }
 
 //        #endregion

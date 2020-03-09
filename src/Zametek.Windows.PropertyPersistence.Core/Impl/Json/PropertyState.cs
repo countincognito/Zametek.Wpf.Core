@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
-namespace Zametek.Wpf.Core
+namespace Zametek.Wpf.Core.Impl.Json
 {
     public class PropertyState
-        : AbstractPropertyState<State, Element, Property>
+        : AbstractPropertyState<PersistenceState, PersistenceElement, PersistenceProperty>
     {
         internal PropertyState(DependencyObject element)
             : base(element)

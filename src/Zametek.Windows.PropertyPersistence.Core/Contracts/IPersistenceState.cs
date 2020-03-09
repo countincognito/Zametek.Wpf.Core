@@ -2,7 +2,7 @@
 
 namespace Zametek.Wpf.Core
 {
-    public interface IAmState<TElement>
+    public interface IPersistenceState<TElement>
     {
         List<TElement> Elements { get; }
     }

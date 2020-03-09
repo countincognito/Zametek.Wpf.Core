@@ -6,34 +6,38 @@ namespace Zametek.Wpf.Core
 {
     public static class DependencyObjectExtensions
     {
-        public static T FindVisualAncestor<T>(this DependencyObject obj)
+        public static T FindVisualAncestor<T>(this DependencyObject item)
             where T : DependencyObject
         {
-            while (obj != null && !(obj is T))
+            while (item != null && !(item is T))
             {
-                obj = VisualTreeHelper.GetParent(obj);
+                item = VisualTreeHelper.GetParent(item);
             }
-            return obj as T;
+            return item as T;
         }
 
-        public static T FindVisualAncestor<T>(this DependencyObject obj, Predicate<T> predicate)
+        public static T FindVisualAncestor<T>(
+            this DependencyObject item,
+            Predicate<T> predicate)
             where T : DependencyObject
         {
-            while (obj != null && (!(obj is T) || !predicate((T)obj)))
+            while (item != null && (!(item is T) || !predicate((T)item)))
             {
-                obj = VisualTreeHelper.GetParent(obj);
+                item = VisualTreeHelper.GetParent(item);
             }
-            return obj as T;
+            return item as T;
         }
 
-        public static T FindVisualDescendant<T>(this DependencyObject obj, string childName)
+        public static T FindVisualDescendant<T>(
+            this DependencyObject item,
+            string childName)
             where T : DependencyObject
         {
             T result = null;
-            int childrenCount = VisualTreeHelper.GetChildrenCount(obj);
+            int childrenCount = VisualTreeHelper.GetChildrenCount(item);
             for (int childIndex = 0; childIndex < childrenCount; ++childIndex)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, childIndex);
+                DependencyObject child = VisualTreeHelper.GetChild(item, childIndex);
                 if ((child as T) == null)
                 {
                     result = child.FindVisualDescendant<T>(childName);
@@ -60,26 +64,28 @@ namespace Zametek.Wpf.Core
             return result;
         }
 
-        public static T FindLogicalAncestor<T>(this DependencyObject obj)
+        public static T FindLogicalAncestor<T>(this DependencyObject item)
             where T : DependencyObject
         {
-            obj = LogicalTreeHelper.GetParent(obj);
-            while (obj != null && !(obj is T))
+            item = LogicalTreeHelper.GetParent(item);
+            while (item != null && !(item is T))
             {
-                obj = LogicalTreeHelper.GetParent(obj);
+                item = LogicalTreeHelper.GetParent(item);
             }
-            return obj as T;
+            return item as T;
         }
 
-        public static T FindLogicalAncestor<T>(this DependencyObject obj, Predicate<T> predicate)
+        public static T FindLogicalAncestor<T>(
+            this DependencyObject item,
+            Predicate<T> predicate)
             where T : DependencyObject
         {
-            obj = LogicalTreeHelper.GetParent(obj);
-            while (obj != null && (!(obj is T) || !predicate((T)obj)))
+            item = LogicalTreeHelper.GetParent(item);
+            while (item != null && (!(item is T) || !predicate((T)item)))
             {
-                obj = LogicalTreeHelper.GetParent(obj);
+                item = LogicalTreeHelper.GetParent(item);
             }
-            return obj as T;
+            return item as T;
         }
     }
 }

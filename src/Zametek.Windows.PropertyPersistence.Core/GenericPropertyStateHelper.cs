@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using Zametek.Utility;
 
 namespace Zametek.Wpf.Core
 {
     public static class GenericPropertyStateHelper<TState, TElement, TProperty>
-        where TState : IAmState<TElement>, new()
-        where TElement : IAmElement<TProperty>, new()
-        where TProperty : IAmProperty, new()
+        where TState : IPersistenceState<TElement>, new()
+        where TElement : IPersistenceElement<TProperty>, new()
+        where TProperty : IPersistenceProperty, new()
     {
         #region Fields
 
@@ -26,33 +25,38 @@ namespace Zametek.Wpf.Core
 
         #region Public Static Methods
 
+#pragma warning disable CA1000 // Do not declare static members on generic types
         public static void Load(
-            IAccessStateResource<TState> stateResourceAccess,
+            IStateResourceAccess<TState> stateResourceAccess,
             Func<DependencyObject, AbstractPropertyState<TState, TElement, TProperty>> addPropertyState)
         {
             if (stateResourceAccess == null)
             {
                 throw new ArgumentNullException(nameof(stateResourceAccess));
             }
-
             AbstractPropertyState<TState, TElement, TProperty>.Persistence.Load(stateResourceAccess);
             s_AddPropertyState = addPropertyState ?? throw new ArgumentNullException(nameof(addPropertyState));
         }
 
-        public static void Save(IAccessStateResource<TState> stateResourceAccess)
+        public static void Save(IStateResourceAccess<TState> stateResourceAccess)
         {
             if (stateResourceAccess == null)
             {
-                throw new ArgumentNullException("stateResourceAccess");
+                throw new ArgumentNullException(nameof(stateResourceAccess));
             }
             AbstractPropertyState<TState, TElement, TProperty>.Persistence.Save(stateResourceAccess);
         }
+#pragma warning restore CA1000 // Do not declare static members on generic types
 
         #endregion
 
         #region Internal Static Methods
 
-        internal static object ProvideValue(DependencyObject target, DependencyProperty property, object defaultValue, BindingBase xamlBinding)
+        internal static object ProvideValue(
+            DependencyObject target,
+            DependencyProperty property,
+            object defaultValue,
+            BindingBase xamlBinding)
         {
             if (target == null
                 || property == null)
@@ -63,11 +67,11 @@ namespace Zametek.Wpf.Core
             if (outputValue == null
                 || string.IsNullOrEmpty(outputValue.ToString()))
             {
-                throw new InvalidOperationException(string.Format("No default value provided for property {0}.{1}", target, property.Name));
+                throw new InvalidOperationException($@"No default value provided for property ""{target}.{property.Name}""");
             }
             if (!outputValue.GetType().IsSerializable)
             {
-                throw new InvalidOperationException(string.Format("Default value provided for property {0}.{1} is not serializable", target, property.Name));
+                throw new InvalidOperationException($@"Default value provided for property ""{target}.{property.Name}"" is not serializable");
             }
 
             FrameworkElement visualAnchor = AbstractPropertyState<TState, TElement, TProperty>.GetVisualAnchor(target);
@@ -107,7 +111,7 @@ namespace Zametek.Wpf.Core
                     object value = AddPropertyValue(target, property, outputValue);
                     if (value == null)
                     {
-                        throw new InvalidOperationException(string.Format("The element {0} has no unique identifier for property persistence", target));
+                        throw new InvalidOperationException($@"The element ""{target}"" has no unique identifier for property persistence");
                     }
                 }
 
@@ -156,15 +160,16 @@ namespace Zametek.Wpf.Core
 
         internal static string GetUidWithNamespace(DependencyObject element)
         {
-            return AbstractPropertyState<TState, TElement, TProperty>.GetNamespace(element)
-                + AbstractPropertyState<TState, TElement, TProperty>.GetUid(element);
+            return $@"{AbstractPropertyState<TState, TElement, TProperty>.GetNamespace(element)}{AbstractPropertyState<TState, TElement, TProperty>.GetUid(element)}";
         }
 
         #endregion
 
         #region Private Static Methods
 
-        private static bool HasPropertyValue(DependencyObject element, DependencyProperty property)
+        private static bool HasPropertyValue(
+            DependencyObject element,
+            DependencyProperty property)
         {
             string uidWithNamespace = GetUidWithNamespace(element);
             if (string.IsNullOrEmpty(uidWithNamespace)
@@ -175,22 +180,27 @@ namespace Zametek.Wpf.Core
             return state.HasValue(property);
         }
 
-        private static object GetPropertyValue(DependencyObject element, DependencyProperty property)
+        private static object GetPropertyValue(
+            DependencyObject element,
+            DependencyProperty property)
         {
             string uidWithNamespace = GetUidWithNamespace(element);
             if (string.IsNullOrEmpty(uidWithNamespace)
                || !s_PropertyStates.TryGetValue(uidWithNamespace, out AbstractPropertyState<TState, TElement, TProperty> state))
             {
-                throw new InvalidOperationException(string.Format("The property {0}.{1} is not in state", element, property.Name));
+                throw new InvalidOperationException($@"The property ""{element}.{property.Name}"" is not in state");
             }
             else if (!state.HasValue(property))
             {
-                throw new InvalidOperationException(string.Format("The property {0}.{1} has no value", element, property.Name));
+                throw new InvalidOperationException($@"The property ""{element}.{property.Name}"" has no value");
             }
             return state.GetValue(property);
         }
 
-        private static object AddPropertyValue(DependencyObject element, DependencyProperty property, object value)
+        private static object AddPropertyValue(
+            DependencyObject element,
+            DependencyProperty property,
+            object value)
         {
             string uidWithNamespace = GetUidWithNamespace(element);
             if (string.IsNullOrEmpty(uidWithNamespace))
@@ -205,7 +215,10 @@ namespace Zametek.Wpf.Core
             return state.AddValue(property, value);
         }
 
-        private static void UpdatePropertyValue(DependencyObject element, DependencyProperty property, object value)
+        private static void UpdatePropertyValue(
+            DependencyObject element,
+            DependencyProperty property,
+            object value)
         {
             string uidWithNamespace = GetUidWithNamespace(element);
             if (string.IsNullOrEmpty(uidWithNamespace)
@@ -216,7 +229,10 @@ namespace Zametek.Wpf.Core
             state.UpdateValue(property, value);
         }
 
-        private static void AddPropertyLoadedHandler(DependencyObject element, DependencyProperty property, RoutedEventHandler value)
+        private static void AddPropertyLoadedHandler(
+            DependencyObject element,
+            DependencyProperty property,
+            RoutedEventHandler value)
         {
             Dictionary<string, RoutedEventHandler> dictionary = GetPrivateLoadedHandlers(element);
             if (dictionary == null)
@@ -227,23 +243,37 @@ namespace Zametek.Wpf.Core
             dictionary.Add(property.Name, value);
         }
 
-        private static bool IsPropertyPersisted(DependencyObject element, DependencyProperty property)
+        private static bool IsPropertyPersisted(
+            DependencyObject element,
+            DependencyProperty property)
         {
             string uidWithNamespace = GetUidWithNamespace(element);
             return AbstractPropertyState<TState, TElement, TProperty>.Persistence.Contains(uidWithNamespace, property.Name);
         }
 
-        private static void SetPrivateLoadedHandlers(DependencyObject element, Dictionary<string, RoutedEventHandler> value)
+        private static void SetPrivateLoadedHandlers(
+            DependencyObject element,
+            Dictionary<string, RoutedEventHandler> value)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(s_LoadedHandlersProperty, value);
         }
 
         private static Dictionary<string, RoutedEventHandler> GetPrivateLoadedHandlers(DependencyObject element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (Dictionary<string, RoutedEventHandler>)element.GetValue(s_LoadedHandlersProperty);
         }
 
-        private static BindingBase CreateStateBinding(DependencyObject element, DependencyProperty property)
+        private static BindingBase CreateStateBinding(
+            DependencyObject element,
+            DependencyProperty property)
         {
             string uidWithNamespace = GetUidWithNamespace(element);
             var output = new Binding()
@@ -254,8 +284,8 @@ namespace Zametek.Wpf.Core
                     Target = element,
                     Property = property,
                 },
-                Source = s_PropertyStates,                                         // Not strictly necessary.
-                Path = new PropertyPath(string.Format("[{0}]", uidWithNamespace)), // Not strictly necessary.
+                Source = s_PropertyStates,                             // Not strictly necessary.
+                Path = new PropertyPath($@"[{{{uidWithNamespace}}}]"), // Not strictly necessary.
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
             };
             return output;
@@ -280,7 +310,11 @@ namespace Zametek.Wpf.Core
                 set;
             }
 
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            public object Convert(
+                object value,
+                Type targetType,
+                object parameter,
+                CultureInfo culture)
             {
                 if (HasPropertyValue(Target, Property))
                 {
@@ -290,7 +324,11 @@ namespace Zametek.Wpf.Core
                 return Binding.DoNothing;
             }
 
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            public object ConvertBack(
+                object value,
+                Type targetType,
+                object parameter,
+                CultureInfo culture)
             {
                 UpdatePropertyValue(Target, Property, value);
                 return Binding.DoNothing;
@@ -323,8 +361,16 @@ namespace Zametek.Wpf.Core
                 set;
             }
 
-            public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+            public object Convert(
+                object[] values,
+                Type targetType,
+                object parameter,
+                CultureInfo culture)
             {
+                if (values == null)
+                {
+                    throw new ArgumentNullException(nameof(values));
+                }
                 if (values.Length == 1)
                 {
                     object input = values[0];
@@ -332,7 +378,7 @@ namespace Zametek.Wpf.Core
                     {
                         return input;
                     }
-                    return System.Convert.ChangeType(input, targetType);
+                    return System.Convert.ChangeType(input, targetType, CultureInfo.InvariantCulture);
                 }
                 if (values.Length == 2)
                 {
@@ -351,7 +397,7 @@ namespace Zametek.Wpf.Core
                             }
                             else
                             {
-                                result = System.Convert.ChangeType(input, targetType);
+                                result = System.Convert.ChangeType(input, targetType, CultureInfo.InvariantCulture);
                             }
                             break;
                         case PropertyValuePreference.DataBound:
@@ -362,19 +408,23 @@ namespace Zametek.Wpf.Core
                             }
                             else
                             {
-                                result = System.Convert.ChangeType(input, targetType);
+                                result = System.Convert.ChangeType(input, targetType, CultureInfo.InvariantCulture);
                             }
                             UpdatePropertyValue(Target, Property, result);
                             break;
                         default:
-                            throw new InvalidOperationException();
+                            throw new InvalidOperationException($@"Unknown PropertyValuePreference value ""{PropertyValuePreference}""");
                     }
                     return result;
                 }
-                throw new InvalidOperationException();
+                throw new InvalidOperationException($@"Invalid number of input items ""{values.Length}""");
             }
 
-            public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+            public object[] ConvertBack(
+                object value,
+                Type[] targetTypes,
+                object parameter,
+                CultureInfo culture)
             {
                 if (targetTypes == null)
                 {
@@ -391,7 +441,7 @@ namespace Zametek.Wpf.Core
                     }
                     else
                     {
-                        result = System.Convert.ChangeType(input, targetType);
+                        result = System.Convert.ChangeType(input, targetType, CultureInfo.InvariantCulture);
                     }
                     results.Add(result);
                 }

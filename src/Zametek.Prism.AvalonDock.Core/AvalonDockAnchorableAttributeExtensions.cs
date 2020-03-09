@@ -40,7 +40,9 @@ namespace Zametek.Wpf.Core
 
         public static AvalonDockAnchorableAttribute GetAvalonDockAnchorableAttribute(this object item)
         {
-            return item?.GetType().GetCustomAttributes(typeof(AvalonDockAnchorableAttribute), true).FirstOrDefault() as AvalonDockAnchorableAttribute;
+            return item?.GetType()
+                .GetCustomAttributes(typeof(AvalonDockAnchorableAttribute), true)
+                .FirstOrDefault() as AvalonDockAnchorableAttribute;
         }
     }
 }

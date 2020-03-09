@@ -5,9 +5,9 @@ using System.Linq;
 namespace Zametek.Wpf.Core
 {
     internal class Persistence<TState, TElement, TProperty>
-        where TState : IAmState<TElement>, new()
-        where TElement : IAmElement<TProperty>, new()
-        where TProperty : IAmProperty, new()
+        where TState : IPersistenceState<TElement>, new()
+        where TElement : IPersistenceElement<TProperty>, new()
+        where TProperty : IPersistenceProperty, new()
     {
         #region Fields
 
@@ -28,11 +28,11 @@ namespace Zametek.Wpf.Core
 
         #region Internal Methods
 
-        internal void Load(IAccessStateResource<TState> stateResourceAccess)
+        internal void Load(IStateResourceAccess<TState> stateResourceAccess)
         {
             if (stateResourceAccess == null)
             {
-                throw new ArgumentNullException("stateResourceAccess");
+                throw new ArgumentNullException(nameof(stateResourceAccess));
             }
             try
             {
@@ -44,16 +44,19 @@ namespace Zametek.Wpf.Core
             }
         }
 
-        internal void Save(IAccessStateResource<TState> stateResourceAccess)
+        internal void Save(IStateResourceAccess<TState> stateResourceAccess)
         {
             if (stateResourceAccess == null)
             {
-                throw new ArgumentNullException("stateResourceAccess");
+                throw new ArgumentNullException(nameof(stateResourceAccess));
             }
             stateResourceAccess.Save(m_State);
         }
 
-        internal void Persist(string uid, string propertyName, string value)
+        internal void Persist(
+            string uid,
+            string propertyName,
+            string value)
         {
             if (m_StateElementsLookup.ContainsKey(uid))
             {
@@ -65,12 +68,16 @@ namespace Zametek.Wpf.Core
             }
         }
 
-        internal bool Contains(string uid, string propertyName)
+        internal bool Contains(
+            string uid,
+            string propertyName)
         {
             return m_StateElementsLookup.ContainsKey(uid) && Contains(m_StateElementsLookup[uid], propertyName);
         }
 
-        internal string GetValue(string uid, string propertyName)
+        internal string GetValue(
+            string uid,
+            string propertyName)
         {
             return GetValue(m_StateElementsLookup[uid], propertyName);
         }
@@ -87,11 +94,14 @@ namespace Zametek.Wpf.Core
             }
         }
 
-        private void Add(string uid, string propertyName, string value)
+        private void Add(
+            string uid,
+            string propertyName,
+            string value)
         {
             if (m_StateElementsLookup.ContainsKey(uid))
             {
-                throw new InvalidOperationException(string.Format("Property name {0} is already in persisted state", propertyName));
+                throw new InvalidOperationException($@"Property name ""{propertyName}"" is already in persisted state");
             }
             var element = new TElement
             {
@@ -107,12 +117,14 @@ namespace Zametek.Wpf.Core
             m_StateElementsLookup.Add(element.Uid, element);
         }
 
-        private void Update(string uid, string propertyName, string value)
+        private void Update(
+            string uid,
+            string propertyName,
+            string value)
         {
-            TElement element;
-            if (!m_StateElementsLookup.TryGetValue(uid, out element))
+            if (!m_StateElementsLookup.TryGetValue(uid, out TElement element))
             {
-                throw new InvalidOperationException(string.Format("Property name {0} is not in persisted state", propertyName));
+                throw new InvalidOperationException($@"Property name ""{propertyName}"" is not in persisted state");
             }
             if (Contains(element, propertyName))
             {
@@ -131,13 +143,25 @@ namespace Zametek.Wpf.Core
 
         #region Private Static Methods
 
-        private static bool Contains(TElement element, string propertyName)
+        private static bool Contains(
+            TElement element,
+            string propertyName)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return element.Properties.Any(x => x.Name == propertyName);
         }
 
-        private static string GetValue(TElement element, string propertyName)
+        private static string GetValue(
+            TElement element,
+            string propertyName)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             TProperty property = element.Properties.FirstOrDefault(x => x.Name == propertyName);
             if (property == null)
             {
@@ -146,8 +170,14 @@ namespace Zametek.Wpf.Core
             return property.Value;
         }
 
-        private static TProperty GetProperty(TElement element, string propertyName)
+        private static TProperty GetProperty(
+            TElement element,
+            string propertyName)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return element.Properties.FirstOrDefault(x => x.Name == propertyName);
         }
 

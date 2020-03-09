@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace Zametek.Wpf.Core
+namespace Zametek.Wpf.Core.Impl.Json
 {
     public class StateResourceAccess
-        : IAccessStateResource<State>
+        : IStateResourceAccess<PersistenceState>
     {
         #region Fields
 
@@ -23,25 +23,25 @@ namespace Zametek.Wpf.Core
 
         #region IAccessStateResource<T> Members
 
-        public State Load()
+        public PersistenceState Load()
         {
             if (File.Exists(m_JsonFileName))
             {
                 using StreamReader reader = File.OpenText(m_JsonFileName);
                 var jsonSerializer = new JsonSerializer();
-                return jsonSerializer.Deserialize(reader, typeof(State)) as State;
+                return jsonSerializer.Deserialize(reader, typeof(PersistenceState)) as PersistenceState;
             }
-            return new State();
+            return new PersistenceState();
         }
 
-        public void Save(State state)
+        public void Save(PersistenceState state)
         {
             using StreamWriter writer = File.CreateText(m_JsonFileName);
             var jsonSerializer = new JsonSerializer
             {
                 Formatting = Formatting.Indented,
             };
-            jsonSerializer.Serialize(writer, state, typeof(State));
+            jsonSerializer.Serialize(writer, state, typeof(PersistenceState));
         }
 
         #endregion

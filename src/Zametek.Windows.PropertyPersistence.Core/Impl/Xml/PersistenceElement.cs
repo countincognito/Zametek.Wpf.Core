@@ -1,19 +1,19 @@
 ﻿//using System.Collections.Generic;
 //using System.Xml.Serialization;
 
-//namespace Zametek.WindowsEx.PropertyPersistence.Xml
+//namespace Zametek.Wpf.Core.Impl.Xml
 //{
 //    [XmlType("element")]
-//    public class Element
-//        : IAmElement<Property>
+//    public class PersistenceElement
+//        : IPersistenceElement<PersistenceProperty>
 //    {
-//        public Element()
+//        public PersistenceElement()
 //        {
-//            Properties = new List<Property>();
+//            Properties = new List<PersistenceProperty>();
 //        }
 
-//        [XmlElement("property")]
-//        public List<Property> Properties
+//        [XmlElement("properties")]
+//        public List<PersistenceProperty> Properties
 //        {
 //            get;
 //            private set;

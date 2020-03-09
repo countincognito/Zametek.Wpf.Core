@@ -1,10 +1,10 @@
 ﻿//using System.Xml.Serialization;
 
-//namespace Zametek.WindowsEx.PropertyPersistence.Xml
+//namespace Zametek.Wpf.Core.Impl.Xml
 //{
 //    [XmlType("property")]
-//    public class Property
-//        : IAmProperty
+//    public class PersistenceProperty
+//        : IPersistenceProperty
 //    {
 //        [XmlAttribute("name")]
 //        public string Name

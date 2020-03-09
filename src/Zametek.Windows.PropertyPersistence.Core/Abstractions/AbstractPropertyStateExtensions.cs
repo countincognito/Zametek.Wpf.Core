@@ -5,11 +5,11 @@ using System.Windows.Markup;
 
 namespace Zametek.Wpf.Core
 {
-    public abstract class AbstractPropertyStateExtension<TState, TElement, TProperty>
+    public abstract class AbstractPropertyStateExtensions<TState, TElement, TProperty>
        : MarkupExtension
-        where TState : IAmState<TElement>, new()
-        where TElement : IAmElement<TProperty>, new()
-        where TProperty : IAmProperty, new()
+        where TState : IPersistenceState<TElement>, new()
+        where TElement : IPersistenceElement<TProperty>, new()
+        where TProperty : IPersistenceProperty, new()
     {
         #region Public Properties
 
@@ -31,6 +31,10 @@ namespace Zametek.Wpf.Core
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
+            if (serviceProvider == null)
+            {
+                throw new ArgumentNullException(nameof(serviceProvider));
+            }
             if (!(serviceProvider.GetService(typeof(IProvideValueTarget)) is IProvideValueTarget provideValueTarget))
             {
                 return this;

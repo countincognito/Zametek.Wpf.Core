@@ -1,7 +1,7 @@
 ﻿
 namespace Zametek.Wpf.Core
 {
-    public interface IAccessStateResource<TState>
+    public interface IStateResourceAccess<TState>
     {
         TState Load();
 

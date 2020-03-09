@@ -1,6 +1,6 @@
 ﻿namespace Zametek.Wpf.Core
 {
-    public interface IAmProperty
+    public interface IPersistenceProperty
     {
         string Name { get; set; }
 
