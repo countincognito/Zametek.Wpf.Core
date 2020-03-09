@@ -1,5 +1,4 @@
-﻿using Prism.Events;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -21,33 +20,12 @@ namespace Zametek.Wpf.Core.TestApp
             LeftAnchorableView leftAnchorableView,
             BottomAnchorableView bottomAnchorableView,
             RightAnchorableView rightAnchorableView,
-            ShellViewModel viewModel,
-            IEventAggregator eventService)
+            ShellViewModel viewModel)
         {
-            if (leftAnchorableView == null)
-            {
-                throw new ArgumentNullException(nameof(leftAnchorableView));
-            }
-            if (bottomAnchorableView == null)
-            {
-                throw new ArgumentNullException(nameof(bottomAnchorableView));
-            }
-            if (rightAnchorableView == null)
-            {
-                throw new ArgumentNullException(nameof(rightAnchorableView));
-            }
-            if (viewModel == null)
-            {
-                throw new ArgumentNullException(nameof(viewModel));
-            }
-            if (eventService == null)
-            {
-                throw new ArgumentNullException(nameof(eventService));
-            }
-            m_LeftAnchorableView = leftAnchorableView;
-            m_BottomAnchorableView = bottomAnchorableView;
-            m_RightAnchorableView = rightAnchorableView;
-            ViewModel = viewModel;
+            m_LeftAnchorableView = leftAnchorableView ?? throw new ArgumentNullException(nameof(leftAnchorableView));
+            m_BottomAnchorableView = bottomAnchorableView ?? throw new ArgumentNullException(nameof(bottomAnchorableView));
+            m_RightAnchorableView = rightAnchorableView ?? throw new ArgumentNullException(nameof(rightAnchorableView));
+            ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
             InitializeComponent();
         }
 
@@ -137,6 +115,15 @@ namespace Zametek.Wpf.Core.TestApp
         private void ShowRightAnchorableViewModel()
         {
             DockManager.ShowAnchorable(m_RightAnchorableView.ViewModel);
+        }
+
+        #endregion
+
+        #region CloseAllDocuments
+
+        private void CloseAllDocuments_Click(object sender, RoutedEventArgs e)
+        {
+            DockManager.CloseAllDocuments();
         }
 
         #endregion

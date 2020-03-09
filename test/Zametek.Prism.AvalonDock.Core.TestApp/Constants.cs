@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Zametek.Wpf.Core.TestApp
+﻿namespace Zametek.Wpf.Core.TestApp
 {
     public static class Constants
     {

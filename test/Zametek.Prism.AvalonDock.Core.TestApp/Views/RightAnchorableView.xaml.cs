@@ -3,7 +3,7 @@ using System;
 
 namespace Zametek.Wpf.Core.TestApp
 {
-    [AvalonDockAnchorable(Strategy = AnchorableStrategy.Right, IsHidden = true)]
+    [AvalonDockAnchorable(Strategy = AnchorableStrategies.Right, IsHidden = true)]
     public partial class RightAnchorableView
         : IActiveAware
     {

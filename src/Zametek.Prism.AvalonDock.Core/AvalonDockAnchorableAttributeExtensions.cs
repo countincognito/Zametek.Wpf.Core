@@ -10,7 +10,7 @@ namespace Zametek.Wpf.Core
             return item?.GetAvalonDockAnchorableAttribute() != null;
         }
 
-        public static AnchorableStrategy GetAnchorableStrategy(this object item)
+        public static AnchorableStrategies GetAnchorableStrategy(this object item)
         {
             if (item == null)
             {

@@ -3,7 +3,7 @@
 namespace Zametek.Wpf.Core
 {
     [Flags]
-    public enum AnchorableStrategy
+    public enum AnchorableStrategies
     {
         Most = 1 << 0,
         Left = 1 << 1,

@@ -302,33 +302,9 @@ namespace Zametek.Wpf.Core
                    layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x)
                       ?? dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x.DataContext);
                })
-
-               //.Case<LayoutContent>(x =>
-               //{
-               //    layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x)
-               //       ?? dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x.Content);
-               //})
-
                .Default(x =>
                {
-                   //x.TypeSwitchOn()
-                   //   .Case<FrameworkElement>(y =>
-                   //   {
-                   //       layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x)
-                   //          ?? dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x.Content);
-                   //   });
-
-
-                   //layoutContent = dockingManager.Layout.Descendents().OfType<T>().Select(y => y.Content).OfType<FrameworkElement>().FirstOrDefault(z => z.DataContext == x);
-
-
-
-
-
-
-
-                   layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x);
-                       //?? dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.da == x.Content)
+                   layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => (y.Content as FrameworkElement)?.DataContext == x);
                });
             return layoutContent;
         }

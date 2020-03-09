@@ -102,7 +102,7 @@ namespace Zametek.Wpf.Core
 
         private static AnchorableShowStrategy GetContentAnchorableStrategy(LayoutAnchorable anchorable)
         {
-            var anchorableStrategy = AnchorableStrategy.Most;
+            var anchorableStrategy = AnchorableStrategies.Most;
             if (anchorable != null)
             {
                 if (anchorable.IsAnchorable())
@@ -120,17 +120,17 @@ namespace Zametek.Wpf.Core
             }
 
             AnchorableShowStrategy flag = 0;
-            foreach (AnchorableStrategy strategyFlag in SplitAnchorableStrategies(anchorableStrategy))
+            foreach (AnchorableStrategies strategyFlag in SplitAnchorableStrategies(anchorableStrategy))
             {
                 var strategy = AnchorableShowStrategy.Most;
 
                 strategy = strategyFlag switch
                 {
-                    AnchorableStrategy.Most => AnchorableShowStrategy.Most,
-                    AnchorableStrategy.Left => AnchorableShowStrategy.Left,
-                    AnchorableStrategy.Right => AnchorableShowStrategy.Right,
-                    AnchorableStrategy.Top => AnchorableShowStrategy.Top,
-                    AnchorableStrategy.Bottom => AnchorableShowStrategy.Bottom,
+                    AnchorableStrategies.Most => AnchorableShowStrategy.Most,
+                    AnchorableStrategies.Left => AnchorableShowStrategy.Left,
+                    AnchorableStrategies.Right => AnchorableShowStrategy.Right,
+                    AnchorableStrategies.Top => AnchorableShowStrategy.Top,
+                    AnchorableStrategies.Bottom => AnchorableShowStrategy.Bottom,
                     _ => throw new InvalidOperationException($@"Unknown AnchorableStrategy value {strategyFlag}"),
                 };
                 flag |= strategy;
@@ -142,10 +142,10 @@ namespace Zametek.Wpf.Core
             return flag;
         }
 
-        private static AnchorableStrategy[] SplitAnchorableStrategies(AnchorableStrategy strategy)
+        private static AnchorableStrategies[] SplitAnchorableStrategies(AnchorableStrategies strategy)
         {
-            var returnArray = new List<AnchorableStrategy>();
-            foreach (var value in Enum.GetValues(typeof(AnchorableStrategy)).Cast<AnchorableStrategy>())
+            var returnArray = new List<AnchorableStrategies>();
+            foreach (var value in Enum.GetValues(typeof(AnchorableStrategies)).Cast<AnchorableStrategies>())
             {
                 if (strategy.HasFlag(value))
                 {
