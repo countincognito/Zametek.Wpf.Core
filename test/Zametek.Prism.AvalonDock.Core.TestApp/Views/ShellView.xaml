@@ -4,6 +4,7 @@
         xmlns:local="clr-namespace:Zametek.Wpf.Core.TestApp"
         xmlns:prism="http://www.codeplex.com/prism"
         xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:avalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
         Title="Test Shell" Height="600" Width="850">
     <Window.Resources>
         <ResourceDictionary>
@@ -105,6 +106,13 @@
                                    AnchorableTitleTemplate="{StaticResource AnchorableTitleTemplate}"
                                    DocumentHeaderTemplate="{StaticResource DocumentHeaderTemplate}"
                                    AnchorableHeaderTemplate="{StaticResource AnchorableHeaderTemplate}"
-                                   DocumentPaneMenuItemHeaderTemplate="{StaticResource DocumentHeaderTemplate}" />
+                                   DocumentPaneMenuItemHeaderTemplate="{StaticResource DocumentHeaderTemplate}">
+            <avalonDockLayout:LayoutRoot x:Name="_layoutRoot">
+                <avalonDockLayout:LayoutPanel IsMaximized="True" Orientation="Vertical" >
+                    <avalonDockLayout:LayoutDocumentPane IsMaximized="True"/>
+                    <avalonDockLayout:LayoutAnchorablePane IsMaximized="True"/>
+                </avalonDockLayout:LayoutPanel>
+            </avalonDockLayout:LayoutRoot>
+        </avalonDock:DockingManager>
     </DockPanel>
 </Window>

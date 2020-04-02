@@ -1,12 +1,19 @@
-﻿using Prism.Mvvm;
+﻿using Prism;
+using Prism.Mvvm;
 using Prism.Regions;
 using System;
 
 namespace Zametek.Wpf.Core.TestApp
 {
     public sealed class DocumentViewModel
-       : BindableBase, INavigationAware
+       : BindableBase, INavigationAware, IActiveAware
     {
+        #region Fields
+
+        private bool m_IsActive;
+
+        #endregion
+
         #region Fields
 
         private string m_Name;
@@ -74,6 +81,28 @@ namespace Zametek.Wpf.Core.TestApp
                 throw new ArgumentNullException(nameof(navigationContext));
             }
             Name = navigationContext.Parameters[Properties.Resources.Name] as string;
+        }
+
+        #endregion
+
+        #region IActiveAware Members
+
+        public event EventHandler IsActiveChanged;
+
+        public bool IsActive
+        {
+            get
+            {
+                return m_IsActive;
+            }
+            set
+            {
+                if (m_IsActive != value)
+                {
+                    m_IsActive = value;
+                    IsActiveChanged?.Invoke(this, new EventArgs());
+                }
+            }
         }
 
         #endregion

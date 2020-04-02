@@ -1,11 +1,18 @@
-﻿using Prism.Mvvm;
-using Prism.Regions;
+﻿using Prism;
+using Prism.Mvvm;
+using System;
 
 namespace Zametek.Wpf.Core.TestApp
 {
     public sealed class RightAnchorableViewModel
-       : BindableBase, INavigationAware
+       : BindableBase, IActiveAware
     {
+        #region Fields
+
+        private bool m_IsActive;
+
+        #endregion
+
         #region Ctors
 
         public RightAnchorableViewModel()
@@ -25,19 +32,24 @@ namespace Zametek.Wpf.Core.TestApp
 
         #endregion
 
-        #region INavigationAware Members
+        #region IActiveAware Members
 
-        bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return false;
-        }
+        public event EventHandler IsActiveChanged;
 
-        void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext)
+        public bool IsActive
         {
-        }
-
-        void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
-        {
+            get
+            {
+                return m_IsActive;
+            }
+            set
+            {
+                if (m_IsActive != value)
+                {
+                    m_IsActive = value;
+                    IsActiveChanged?.Invoke(this, new EventArgs());
+                }
+            }
         }
 
         #endregion

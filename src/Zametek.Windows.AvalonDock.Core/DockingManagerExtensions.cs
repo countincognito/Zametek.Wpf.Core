@@ -291,21 +291,23 @@ namespace Zametek.Wpf.Core
             {
                 return null;
             }
-            T layoutContent = null;
-            content.TypeSwitchOn()
-               .Case<T>(x =>
-               {
-                   layoutContent = x;
-               })
-               .Case<FrameworkElement>(x =>
-               {
-                   layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x)
-                      ?? dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x.DataContext);
-               })
-               .Default(x =>
-               {
-                   layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => (y.Content as FrameworkElement)?.DataContext == x);
-               });
+            T layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == content);
+            if (layoutContent == null)
+            {
+                content.TypeSwitchOn()
+                   .Case<T>(x =>
+                   {
+                       layoutContent = x;
+                   })
+                   .Case<FrameworkElement>(x =>
+                   {
+                       layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => y.Content == x.DataContext);
+                   })
+                   .Default(x =>
+                   {
+                       layoutContent = dockingManager.Layout.Descendents().OfType<T>().FirstOrDefault(y => (y.Content as FrameworkElement)?.DataContext == x);
+                   });
+            }
             return layoutContent;
         }
 

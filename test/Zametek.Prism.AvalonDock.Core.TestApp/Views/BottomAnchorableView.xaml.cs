@@ -17,11 +17,6 @@ namespace Zametek.Wpf.Core.TestApp
 
         public BottomAnchorableView()
         {
-
-            var a = new System.Windows.Controls.UserControl();
-
-
-
             InitializeComponent();
         }
 
