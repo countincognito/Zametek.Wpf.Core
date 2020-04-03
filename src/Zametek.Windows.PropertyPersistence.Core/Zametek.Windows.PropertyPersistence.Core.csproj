@@ -5,7 +5,7 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>Zametek.Wpf.Core</RootNamespace>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.0</Version>
+    <Version>0.1.0</Version>
     <Authors>countincognito</Authors>
     <Copyright>Copyright (c) 2020 Riccardo M Bennett-Lovsey</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
