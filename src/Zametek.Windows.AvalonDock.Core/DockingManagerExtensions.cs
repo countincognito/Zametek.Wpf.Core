@@ -201,7 +201,8 @@ namespace Zametek.Wpf.Core
             {
                 item.HideCommand.Execute(true);
             }
-            if (removeAsActiveContent && dockingManager.ActiveContent == content)
+            if (removeAsActiveContent
+                && dockingManager.ActiveContent == anchorable)
             {
                 dockingManager.ActiveContent = null;
             }
@@ -247,15 +248,15 @@ namespace Zametek.Wpf.Core
             {
                 return false;
             }
-            if (!anchorable.IsHidden
-                || !dockingManager.IsActuallyHidden(anchorable))
+            if (anchorable.IsHidden
+                || dockingManager.IsActuallyHidden(anchorable))
             {
-                return true;
+                anchorable.Show();
             }
-            anchorable.Show();
-            if (setAsActiveContent)
+            if (setAsActiveContent
+                && dockingManager.ActiveContent != anchorable)
             {
-                dockingManager.ActiveContent = content;
+                dockingManager.ActiveContent = anchorable;
             }
             return !dockingManager.IsActuallyHidden(anchorable);
         }

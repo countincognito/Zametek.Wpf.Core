@@ -47,7 +47,7 @@ namespace Zametek.Wpf.Core.TestApp
 
         #endregion
 
-        #region ShowLeftAnchorable
+        #region LeftAnchorable
 
         private void ShowLeftAnchorableButtonView_Click(object sender, RoutedEventArgs e)
         {
@@ -56,7 +56,7 @@ namespace Zametek.Wpf.Core.TestApp
 
         private void ShowLeftAnchorableView()
         {
-            DockManager.ShowAnchorable(m_LeftAnchorableView);
+            DockManager.ShowAnchorable(m_LeftAnchorableView, setAsActiveContent: true);
         }
 
         private void ShowLeftAnchorableButtonViewModel_Click(object sender, RoutedEventArgs e)
@@ -66,12 +66,33 @@ namespace Zametek.Wpf.Core.TestApp
 
         private void ShowLeftAnchorableViewModel()
         {
-            DockManager.ShowAnchorable(m_LeftAnchorableView.ViewModel);
+            DockManager.ShowAnchorable(m_LeftAnchorableView.ViewModel, setAsActiveContent: true);
+        }
+
+
+        private void HideLeftAnchorableButtonView_Click(object sender, RoutedEventArgs e)
+        {
+            HideLeftAnchorableView();
+        }
+
+        private void HideLeftAnchorableView()
+        {
+            DockManager.HideAnchorable(m_LeftAnchorableView, removeAsActiveContent: true);
+        }
+
+        private void HideLeftAnchorableButtonViewModel_Click(object sender, RoutedEventArgs e)
+        {
+            HideLeftAnchorableViewModel();
+        }
+
+        private void HideLeftAnchorableViewModel()
+        {
+            DockManager.HideAnchorable(m_LeftAnchorableView.ViewModel, removeAsActiveContent: true);
         }
 
         #endregion
 
-        #region ShowBottomAnchorable
+        #region BottomAnchorable
 
         private void ShowBottomAnchorableButtonView_Click(object sender, RoutedEventArgs e)
         {
@@ -80,7 +101,7 @@ namespace Zametek.Wpf.Core.TestApp
 
         private void ShowBottomAnchorableView()
         {
-            DockManager.ShowAnchorable(m_BottomAnchorableView);
+            DockManager.ShowAnchorable(m_BottomAnchorableView, setAsActiveContent: true);
         }
 
         private void ShowBottomAnchorableButtonViewModel_Click(object sender, RoutedEventArgs e)
@@ -90,12 +111,33 @@ namespace Zametek.Wpf.Core.TestApp
 
         private void ShowBottomAnchorableViewModel()
         {
-            DockManager.ShowAnchorable(m_BottomAnchorableView.ViewModel);
+            DockManager.ShowAnchorable(m_BottomAnchorableView.ViewModel, setAsActiveContent: true);
+        }
+
+
+        private void HideBottomAnchorableButtonView_Click(object sender, RoutedEventArgs e)
+        {
+            HideBottomAnchorableView();
+        }
+
+        private void HideBottomAnchorableView()
+        {
+            DockManager.HideAnchorable(m_BottomAnchorableView, removeAsActiveContent: true);
+        }
+
+        private void HideBottomAnchorableButtonViewModel_Click(object sender, RoutedEventArgs e)
+        {
+            HideBottomAnchorableViewModel();
+        }
+
+        private void HideBottomAnchorableViewModel()
+        {
+            DockManager.HideAnchorable(m_BottomAnchorableView.ViewModel, removeAsActiveContent: true);
         }
 
         #endregion
 
-        #region ShowRightAnchorable
+        #region RightAnchorable
 
         private void ShowRightAnchorableButtonView_Click(object sender, RoutedEventArgs e)
         {
@@ -104,7 +146,7 @@ namespace Zametek.Wpf.Core.TestApp
 
         private void ShowRightAnchorableView()
         {
-            DockManager.ShowAnchorable(m_RightAnchorableView);
+            DockManager.ShowAnchorable(m_RightAnchorableView, setAsActiveContent: true);
         }
 
         private void ShowRightAnchorableButtonViewModel_Click(object sender, RoutedEventArgs e)
@@ -114,7 +156,27 @@ namespace Zametek.Wpf.Core.TestApp
 
         private void ShowRightAnchorableViewModel()
         {
-            DockManager.ShowAnchorable(m_RightAnchorableView.ViewModel);
+            DockManager.ShowAnchorable(m_RightAnchorableView.ViewModel, setAsActiveContent: true);
+        }
+
+        private void HideRightAnchorableButtonView_Click(object sender, RoutedEventArgs e)
+        {
+            HideRightAnchorableView();
+        }
+
+        private void HideRightAnchorableView()
+        {
+            DockManager.HideAnchorable(m_RightAnchorableView, removeAsActiveContent: true);
+        }
+
+        private void HideRightAnchorableButtonViewModel_Click(object sender, RoutedEventArgs e)
+        {
+            HideRightAnchorableViewModel();
+        }
+
+        private void HideRightAnchorableViewModel()
+        {
+            DockManager.HideAnchorable(m_RightAnchorableView.ViewModel, removeAsActiveContent: true);
         }
 
         #endregion

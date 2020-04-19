@@ -89,6 +89,62 @@
 
             <DockPanel DockPanel.Dock="Top"
                        Margin="0,7,0,0">
+                <Button Content="Hide Left Anchorable (View)"
+                        DockPanel.Dock="Left"
+                        Height="23"
+                        Width="250"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Click="HideLeftAnchorableButtonView_Click"/>
+                <Button Margin="7,0,0,0"
+                        Content="Hide Bottom Anchorable (View)"
+                        DockPanel.Dock="Left"
+                        Height="23"
+                        Width="250"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Click="HideBottomAnchorableButtonView_Click"/>
+                <Button Margin="7,0,0,0"
+                        Content="Hide Right Anchorable (View)"
+                        DockPanel.Dock="Left"
+                        Height="23"
+                        Width="250"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Click="HideRightAnchorableButtonView_Click"/>
+                <Grid />
+            </DockPanel>
+
+            <DockPanel DockPanel.Dock="Top"
+                       Margin="0,7,0,0">
+                <Button Content="Hide Left Anchorable (ViewModel)"
+                        DockPanel.Dock="Left"
+                        Height="23"
+                        Width="250"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Click="HideLeftAnchorableButtonViewModel_Click"/>
+                <Button Margin="7,0,0,0"
+                        Content="Hide Bottom Anchorable (ViewModel)"
+                        DockPanel.Dock="Left"
+                        Height="23"
+                        Width="250"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Click="HideBottomAnchorableButtonViewModel_Click"/>
+                <Button Margin="7,0,0,0"
+                        Content="Hide Right Anchorable (ViewModel)"
+                        DockPanel.Dock="Left"
+                        Height="23"
+                        Width="250"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Click="HideRightAnchorableButtonViewModel_Click"/>
+                <Grid />
+            </DockPanel>
+
+            <DockPanel DockPanel.Dock="Top"
+                       Margin="0,7,0,0">
                 <Button Content="Close All Documents"
                         DockPanel.Dock="Left"
                         Height="23"
