@@ -12,6 +12,7 @@
     <NeutralLanguage>en-GB</NeutralLanguage>
     <Description>Zametek Windows extensions for interacting with XAML code (.NET Core).</Description>
     <Version>0.1.0</Version>
+    <AssemblyName>Zametek.Windows.Interactivity.Core</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
